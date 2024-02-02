@@ -1,17 +1,22 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 interface IProps {
+  id: number
   name: string
+  onPressHandler: () => void
 }
 
-const ParticipantItem: React.FC<IProps> = ({ name }) => {
+const ParticipantItem: React.FC<IProps> = ({ name, onPressHandler }) => {
   return (
     <View style={styles.container}>
       <View style={styles.nameContainer}>
         <Text style={styles.nameText}>{name}</Text>
       </View>
 
-      <TouchableOpacity style={styles.btnContainer}>
+      <TouchableOpacity
+        style={styles.btnContainer}
+        onPress={onPressHandler}
+      >
         <Text style={styles.btnText}>-</Text>
       </TouchableOpacity>
     </View>

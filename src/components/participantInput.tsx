@@ -8,11 +8,16 @@ import {
 } from 'react-native'
 
 interface IProps {
-  onPressHandler: (newParticipante: string) => void
+  onAddHandler: (newParticipante: string) => void
 }
 
-const ParticipantInput: React.FC<IProps> = ({ onPressHandler }) => {
+const ParticipantInput: React.FC<IProps> = ({ onAddHandler }) => {
   const [nomeParticipante, setNomeParticipante] = useState('')
+
+  const onPressHandler = () => {
+    onAddHandler(nomeParticipante)
+    setNomeParticipante('')
+  }
 
   return (
     <View style={styles.container}>
@@ -25,7 +30,7 @@ const ParticipantInput: React.FC<IProps> = ({ onPressHandler }) => {
       />
       <TouchableOpacity
         style={styles.btnContainer}
-        onPress={() => onPressHandler(nomeParticipante)}
+        onPress={() => onPressHandler()}
       >
         <Text style={styles.btnText}>+</Text>
       </TouchableOpacity>

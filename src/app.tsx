@@ -4,19 +4,44 @@ import { registerRootComponent } from 'expo'
 import ParticipantInput from './components/participantInput'
 import EventInfo from './components/eventInfo'
 import ParticipantItem from './components/participantItem'
+import { useState } from 'react'
+
+type Participant = {
+  id: number
+  name: string
+}
 
 const App = () => {
+  const [participants, setParticipants] = useState<Participant[]>([])
+
+  const addParticipant = (name: string) => {
+    setParticipants((oldValue) => [
+      ...oldValue,
+      { id: oldValue.length + 1, name },
+    ])
+  }
+
+  const removeParticipant = (id: number) => () => {
+    const newValue = [...participants]
+    const pIndex = newValue.findIndex((p) => (p.id = id))
+    newValue.splice(pIndex, 1)
+
+    setParticipants(newValue)
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <EventInfo />
-      <ParticipantInput
-        onPressHandler={(newParticipant) => console.log(newParticipant)}
-      />
+      <ParticipantInput onAddHandler={addParticipant} />
       <ScrollView>
-        <ParticipantItem name="Mikael Campos Marceniuk" />
-        <ParticipantItem name="Nicolas Campos Marceniuk" />
-        <ParticipantItem name="Agatha Campos Marceniuk" />
+        {participants.map((p) => (
+          <ParticipantItem
+            key={p.id}
+            onPressHandler={removeParticipant(p.id)}
+            {...p}
+          />
+        ))}
       </ScrollView>
     </View>
   )
