@@ -1,5 +1,10 @@
-import { StatusBar } from 'expo-status-bar'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  ToastAndroid,
+  View,
+} from 'react-native'
 import { registerRootComponent } from 'expo'
 import ParticipantInput from './components/participantInput'
 import EventInfo from './components/eventInfo'
@@ -15,10 +20,22 @@ const App = () => {
   const [participants, setParticipants] = useState<Participant[]>([])
 
   const addParticipant = (name: string) => {
+    if (name == '') {
+      ToastAndroid.show('Insira um nome para adicionar.', ToastAndroid.LONG)
+      return false
+    }
+
+    if (participants.find((p) => p.name == name)) {
+      ToastAndroid.show('Participante ja existe.', ToastAndroid.LONG)
+      return false
+    }
+
     setParticipants((oldValue) => [
       ...oldValue,
       { id: oldValue.length + 1, name },
     ])
+
+    return true
   }
 
   const removeParticipant = (id: number) => () => {
@@ -31,7 +48,11 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
       <EventInfo />
       <ParticipantInput onAddHandler={addParticipant} />
       <ScrollView>

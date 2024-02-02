@@ -8,16 +8,14 @@ import {
 } from 'react-native'
 
 interface IProps {
-  onAddHandler: (newParticipante: string) => void
+  onAddHandler: (newParticipante: string) => boolean
 }
 
 const ParticipantInput: React.FC<IProps> = ({ onAddHandler }) => {
   const [nomeParticipante, setNomeParticipante] = useState('')
 
-  const onPressHandler = () => {
-    onAddHandler(nomeParticipante)
-    setNomeParticipante('')
-  }
+  const onPressHandler = () =>
+    onAddHandler(nomeParticipante) && setNomeParticipante('')
 
   return (
     <View style={styles.container}>
