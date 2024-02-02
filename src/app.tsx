@@ -1,12 +1,17 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 import { registerRootComponent } from 'expo'
+import ParticipantInput from './components/participantInput'
+import EventInfo from './components/eventInfo'
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
       <StatusBar style="auto" />
+      <EventInfo />
+      <ParticipantInput
+        onPressHandler={(newParticipant) => console.log(newParticipant)}
+      />
     </View>
   )
 }
@@ -14,9 +19,12 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    gap: 32,
+
+    padding: 24,
+    paddingTop: 48,
+
+    backgroundColor: '#131016',
   },
 })
 
